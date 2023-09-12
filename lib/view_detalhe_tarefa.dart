@@ -41,7 +41,38 @@ class _DetalheTarefaState extends State<DetalheTarefa> {
         ),
         title: Text("Detalhe da tarefa"),
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
+          IconButton(onPressed: () async{
+            await showDialog(
+                context: context,
+                builder: (context){
+                  return AlertDialog(
+                    content: Text("Você deseja excluir?"),
+                    actions: [
+                      TextButton(
+                          onPressed: (){
+                            Atividade at = listaAtividades.removeAt(widget.index!);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content:
+                                  Text("Tarefa excluída com sucesso!!", style: TextStyle(fontSize: 18),),
+                                  backgroundColor: Colors.red,
+                                )
+                            );
+                            Navigator.pop(context, "remove");
+                          },
+                          child: Text("Sim")
+                      ),
+                      TextButton(
+                          onPressed: (){
+                            Navigator.pop(context);
+                          },
+                          child: Text("Não")
+                      )
+                    ],
+                  );
+                }
+            );
+            Navigator.pop(context, "remove");
+          }, icon: Icon(Icons.delete)),
           IconButton(onPressed: (){
             Navigator.push(
                 context,

@@ -45,43 +45,14 @@ class _HomeState extends State<Home> {
                       listaAtividades;
                     });
                   }
+                  if( t == "remove"){
+                    setState(() {
+                      listaAtividades;
+                    });
+                  }
                 },
                 title: Text("${listaAtividades[index].titulo}"),
                 subtitle: Text("${listaAtividades[index].descricao}"),
-                trailing: IconButton(
-                    onPressed: (){
-                      showDialog(
-                          context: context,
-                          builder: (context){
-                            return AlertDialog(
-                              content: Text("Você deseja excluir?"
-                              ),
-                              actions: [
-                                TextButton(
-                                    onPressed: (){
-                                      setState(() {
-                                        listaAtividades.removeAt(index);
-                                        listaAtividades;
-                                       });
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text("Sim")
-                                ),
-                                TextButton(
-                                    onPressed: (){
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text("Não")
-                                )
-                              ],
-                            );
-                          }
-                      );
-                    },
-                    icon: Icon(Icons.delete,
-                      color: Colors.red,
-                    )
-                )
               ),
             );
           }
