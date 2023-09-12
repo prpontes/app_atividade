@@ -28,35 +28,53 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text("Tarefas"),
       ),
-      body: ListView.builder(
+      body: listaAtividades.isNotEmpty ? ListView.builder(
         itemCount: listaAtividades.length,
           itemBuilder: (context, index){
             return Card(
               child: ListTile(
                 onTap: () async {
                   var t = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DetalheTarefa(atividade: listaAtividades[index], index: index,)
-                    )
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              DetalheTarefa(atividade: listaAtividades[index],
+                                index: index,)
+                      )
                   );
-                  if(t == "edit"){
+                  if (t == "edit") {
                     setState(() {
                       listaAtividades;
                     });
                   }
-                  if( t == "remove"){
+                  if (t == "remove") {
                     setState(() {
                       listaAtividades;
                     });
                   }
                 },
-                title: Text("${listaAtividades[index].titulo}"),
-                subtitle: Text("${listaAtividades[index].descricao}"),
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      "${listaAtividades[index].urlImg}"),
+                ),
+                title: Text("${listaAtividades[index].titulo}",
+                  style: TextStyle(fontSize: 20),),
+                subtitle: Text("${listaAtividades[index].descricao}",
+                  style: TextStyle(fontSize: 18),),
+                trailing: Tooltip(
+                  message: "Atividade concluída!",
+                  child: Checkbox(
+                      value: listaAtividades[index].concluida,
+                      onChanged: (valor) {
+                        setState(() {
+                          listaAtividades[index].concluida = valor;
+                        });
+                      }),
+                ),
               ),
             );
           }
-      ),
+      ) : const Center(child: Text("Nenhuma tarefa!", style: TextStyle(fontSize: 20),),),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
           onPressed: (){
@@ -67,6 +85,23 @@ class _HomeState extends State<Home> {
                 )
             );
           }
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white70,
+          items: const [
+            BottomNavigationBarItem(
+              label: "Tarefas",
+              icon: Icon(Icons.list)
+            ),
+            BottomNavigationBarItem(
+              label: "Concluídas",
+              icon: Icon(Icons.check_box)
+            ),
+            BottomNavigationBarItem(
+              label: "Configuração",
+              icon: Icon(Icons.settings)
+            ),
+          ]
       ),
     );
   }

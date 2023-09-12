@@ -34,7 +34,7 @@ class _DetalheTarefaState extends State<DetalheTarefa> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.keyboard_return),
+          icon: Icon(Icons.arrow_back),
           onPressed: (){
             Navigator.pop(context, "edit");
           },
@@ -85,6 +85,13 @@ class _DetalheTarefaState extends State<DetalheTarefa> {
       ),
       body: ListView(
         children: [
+          Card(
+            child: SizedBox(
+              height: 150,
+              width: 200,
+              child: Image.network(widget.atividade!.urlImg!),
+            ),
+          ),
           ListTile(
             title: const Text("Título", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
             subtitle: Text(widget.atividade!.titulo!, style: const TextStyle(fontSize: 25)),
