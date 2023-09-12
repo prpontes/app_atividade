@@ -23,6 +23,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Tarefas"),
@@ -30,17 +31,58 @@ class _HomeState extends State<Home> {
       body: ListView.builder(
         itemCount: listaAtividades.length,
           itemBuilder: (context, index){
-            return ListTile(
-              onTap: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DetalheTarefa()
-                  )
-                );
-              },
-              title: Text("${listaAtividades[index].titulo}"),
-              subtitle: Text("${listaAtividades[index].descricao}"),
+            return Card(
+              child: ListTile(
+                onTap: () async {
+                  var t = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DetalheTarefa(atividade: listaAtividades[index], index: index,)
+                    )
+                  );
+                  if(t == "edit"){
+                    setState(() {
+                      listaAtividades;
+                    });
+                  }
+                },
+                title: Text("${listaAtividades[index].titulo}"),
+                subtitle: Text("${listaAtividades[index].descricao}"),
+                trailing: IconButton(
+                    onPressed: (){
+                      showDialog(
+                          context: context,
+                          builder: (context){
+                            return AlertDialog(
+                              content: Text("Você deseja excluir?"
+                              ),
+                              actions: [
+                                TextButton(
+                                    onPressed: (){
+                                      setState(() {
+                                        listaAtividades.removeAt(index);
+                                        listaAtividades;
+                                       });
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("Sim")
+                                ),
+                                TextButton(
+                                    onPressed: (){
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("Não")
+                                )
+                              ],
+                            );
+                          }
+                      );
+                    },
+                    icon: Icon(Icons.delete,
+                      color: Colors.red,
+                    )
+                )
+              ),
             );
           }
       ),
