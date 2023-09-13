@@ -13,6 +13,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+  bool busca = false;
+  TextEditingController controllerBuscaTarefas = TextEditingController();
+  List<Atividade> campoBuscaVazio = listaAtividades;
+
   void salvar(Atividade at){
     listaAtividades.add(at);
     setState(() {
@@ -26,8 +30,52 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Tarefas"),
+        title: busca ? TextField(
+          style: TextStyle(fontSize: 20, color: Colors.white),
+          cursorColor: Colors.white,
+          showCursor: true,
+          autofocus: true,
+          decoration: const InputDecoration(
+            hintText: "digite um texto...",
+            hintStyle: TextStyle(color: Colors.white),
+          ),
+          controller: controllerBuscaTarefas,
+          onTapOutside: (e){
+            setState(() {
+              busca = false;
+            });
+          },
+          onChanged: (e){
+            List<Atividade> campoBuscaPreenchido = [];
+
+            if(controllerBuscaTarefas.text.isEmpty){
+              setState(() {
+                listaAtividades = campoBuscaVazio;
+              });
+            }else{
+              listaAtividades.forEach((element) {
+                if (element.titulo!.toLowerCase().contains(controllerBuscaTarefas.text) || element.descricao!.toLowerCase().contains(controllerBuscaTarefas.text)) {
+                  campoBuscaPreenchido.add(element);
+                }
+              });
+              setState(() {
+                listaAtividades = campoBuscaPreenchido;
+              });
+            }
+          },
+        ) : const Text("Tarefas"),
+        actions: [
+          IconButton(
+              onPressed: (){
+                setState(() {
+                  busca = true;
+                });
+              },
+              icon: Icon(Icons.search)
+          )
+        ],
       ),
+      drawer: Drawer(),
       body: listaAtividades.isNotEmpty ? ListView.builder(
         itemCount: listaAtividades.length,
           itemBuilder: (context, index){
