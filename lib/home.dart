@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'atividade.dart';
 import 'dados.dart';
+import 'menu.dart';
 import 'view_cadAtividade.dart';
 import 'view_detalhe_tarefa.dart';
 
@@ -24,6 +27,16 @@ class _HomeState extends State<Home> {
     });
     Navigator.pop(context);
   }
+
+  // Image? carregarImagemTarefa(index){
+  //   Image? img;
+  //   try{
+  //     img = Image.network("${listaAtividades[index].urlImg}");
+  //   }on HttpException{
+  //     img = Image.asset("img.png");
+  //   }
+  //   return img;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +88,7 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
-      drawer: Drawer(),
+      drawer: Menu(),
       body: listaAtividades.isNotEmpty ? ListView.builder(
         itemCount: listaAtividades.length,
           itemBuilder: (context, index){
@@ -124,6 +137,7 @@ class _HomeState extends State<Home> {
           }
       ) : const Center(child: Text("Nenhuma tarefa!", style: TextStyle(fontSize: 20),),),
       floatingActionButton: FloatingActionButton(
+        tooltip: "Nova atividade",
         child: Icon(Icons.add),
           onPressed: (){
             Navigator.push(
