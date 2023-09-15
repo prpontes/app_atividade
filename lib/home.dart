@@ -28,19 +28,8 @@ class _HomeState extends State<Home> {
     Navigator.pop(context);
   }
 
-  // Image? carregarImagemTarefa(index){
-  //   Image? img;
-  //   try{
-  //     img = Image.network("${listaAtividades[index].urlImg}");
-  //   }on HttpException{
-  //     img = Image.asset("img.png");
-  //   }
-  //   return img;
-  // }
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: busca ? TextField(
