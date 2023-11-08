@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'atividade.dart';
 import 'dados.dart';
@@ -105,7 +103,7 @@ class _HomeState extends State<Home> {
                 },
                 leading: CircleAvatar(
                   backgroundImage: NetworkImage(
-                      "${listaAtividades[index].urlImg}"),
+                      "${listaAtividades[index].urlImg}",),
                 ),
                 title: Text("${listaAtividades[index].titulo}",
                   style: TextStyle(fontSize: 20),),
