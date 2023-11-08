@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'atividade.dart';
+import 'banco.dart';
 import 'dados.dart';
 import 'menu.dart';
 import 'view_cadAtividade.dart';
 import 'view_detalhe_tarefa.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  Banco? bd;
+  Home({Key? key, this.bd}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -16,7 +18,8 @@ class _HomeState extends State<Home> {
 
   bool busca = false;
   TextEditingController controllerBuscaTarefas = TextEditingController();
-  List<Atividade> campoBuscaVazio = listaAtividades;
+  List<Atividade> listaAtividades = [];
+  List<Atividade> campoBuscaVazio = [];
 
   void salvar(Atividade at){
     listaAtividades.add(at);
@@ -24,6 +27,20 @@ class _HomeState extends State<Home> {
       listaAtividades;
     });
     Navigator.pop(context);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    carregarAtividades();
+  }
+
+  Future<void> carregarAtividades() async{
+    listaAtividades = await widget.bd!.listarAtividades();
+    setState(() {
+      listaAtividades;
+    });
   }
 
   @override
