@@ -27,7 +27,7 @@ void main() async {
   ));
 
   runApp(MaterialApp(
-    home: Home(),
+    home: Home(bd: banco,),
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
       primarySwatch: Colors.green
