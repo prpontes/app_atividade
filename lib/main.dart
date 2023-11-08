@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
-
+  // inicializa a criação do banco
   var banco = Banco();
   await banco.criarBanco();
 
