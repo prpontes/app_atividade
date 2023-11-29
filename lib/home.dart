@@ -23,6 +23,7 @@ class _HomeState extends State<Home> {
 
   void salvar(Atividade at){
     listaAtividades.add(at);
+    widget.bd!.inserirAtividade(at);
     setState(() {
       listaAtividades;
     });
